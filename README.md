@@ -1,4 +1,3 @@
-Website-Debugger
-================
+#Website Debugger
 
-Collection of CSS and javascript to help detect possible errors on website.
+Collection of CSS and JavaScript to help detect possible errors on website.
