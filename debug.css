@@ -102,12 +102,12 @@ form:not([action]) {
 
 /* Has an empty action */
 form[action=""] {
-    outline: 5px solid red !important;
+    outline: 5px solid red;
 }
 
 /* Has an empty method */
 form[method=""] {
-    outline: 5px solid yellow !important;
+    outline: 5px solid yellow;
 }
 
 
