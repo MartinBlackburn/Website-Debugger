@@ -26,7 +26,8 @@
 /* Ignore elements that are OK to be empty */
 .clear:empty,
 textarea:empty,
-input:empty {
+input:empty,
+img:empty {
 	outline: none;
 }
 
