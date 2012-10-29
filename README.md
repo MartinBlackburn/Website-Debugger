@@ -10,16 +10,17 @@ These debugging tools should not be relied upon, they are here to aid your usual
 Images without alt text  
 Links without a href  
 Lists with child elements that aren't li's  
-Forms without method or action  
-Inputs without name  
-Inputs without type  
+Forms without a method or action  
+Inputs without a name  
+Inputs without a type  
 Submit input without a value
+Elements with an empty class or ID
 
 ####Yellow errors
 Empty elements, except for images, textareas, inputs and a element with 'clear' as a class.  
-Images with empty alt text  
-Links with empty href  
-Links with href of '#' or containing 'javascript'  
-Forms with emprty method  
+Images with an empty alt text  
+Links with an empty href  
+Links with a href of '#' or containing 'javascript'  
+Forms with an empty method  
 Elements with inlines styles as these should be avioded where possible  
 Elements with IDs as these shouldn't be used in CSS
