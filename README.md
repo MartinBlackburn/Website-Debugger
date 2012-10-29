@@ -16,7 +16,7 @@ Inputs without type
 Submit input without a value
 
 ####Yellow errors
-Empty elements, except for textareas, inputs and a element with 'clear' as a class.  
+Empty elements, except for images, textareas, inputs and a element with 'clear' as a class.  
 Images with empty alt text  
 Links with empty href  
 Links with href of '#' or containing 'javascript'  
