@@ -26,7 +26,9 @@
 .clear:empty,
 textarea:empty,
 input:empty,
-img:empty {
+img:empty,
+br:empty,
+hr:empty {
 	outline: none;
 }
 

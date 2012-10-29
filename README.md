@@ -17,7 +17,7 @@ Submit input without a value
 Elements with an empty class or ID
 
 ####Yellow errors
-Empty elements, except for images, textareas, inputs and a element with 'clear' as a class.  
+Empty elements 
 Images with an empty alt text  
 Links with an empty href  
 Links with a href of '#' or containing 'javascript'  
