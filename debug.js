@@ -16,9 +16,10 @@ Debug = function(element)
 	    		"z-index: 9999;"
 	}).prependTo("body");
 	
-	$('<span/>', {
+	$('<a/>', {
 		"style": "padding: 5px 8px;" +
 				"background: #ccc;" +
+				"color: #333;" +
 				"line-height: 1em;" +
 				"position: absolute;" +
 				"top: 0; " +
@@ -67,24 +68,14 @@ Debug = function(element)
 		$(".debugger div").slideToggle();
 		$(".debugger h1").slideToggle();
 		
-		if($(".debugger span").text() == "-")
+		if($(".debugger a").text() == "-")
 		{
-			$(".debugger span").text("+");
+			$(".debugger a").text("+");
 		} else {
-			$(".debugger span").text("-");
+			$(".debugger a").text("-");
 		}
-		
 	}
 	
-	
-	
-	
-	
-	/*----------------------------------------------------------------------------------------------------------------*\
-		SET COUNTS TO 0
-	\*----------------------------------------------------------------------------------------------------------------*/
-	var imageMissingAltCount = 0;
-	var imageEmptyAltCount = 0;
 	
 	
 	
@@ -92,22 +83,9 @@ Debug = function(element)
 	/*----------------------------------------------------------------------------------------------------------------*\
 		RUN ALL CHECKS
 	\*----------------------------------------------------------------------------------------------------------------*/
+	errorsText();
 	imageMissingAlt();
 	imageEmptyAlt();
-	
-	
-	
-	
-	
-	/*----------------------------------------------------------------------------------------------------------------*\
-		UPDATE ERROR COUNTS
-	\*----------------------------------------------------------------------------------------------------------------*/
-	updateCounts();
-	function updateCounts()
-	{
-		$(".imageMissingAlt").text("Images missing alt text: " + imageMissingAltCount);
-		$(".imageEmptyAlt").text("Images empty alt text: " + imageEmptyAltCount);
-	}
 	
 	
 	
@@ -143,28 +121,51 @@ Debug = function(element)
 	
 	
 	
+	/*----------------------------------------------------------------------------------------------------------------*\
+		TOGGLE ERROR TEXT 
+	\*----------------------------------------------------------------------------------------------------------------*/
+	function toggleErrorText(element)
+	{	
+		if($(element).text() == "shown")
+		{
+			$(element).text("hidden");
+		} else {
+			$(element).text("shown");
+		}
+	}
+	
+	
+	
+	
 	
 	/*----------------------------------------------------------------------------------------------------------------*\
 		ERROR CHECKS
 	\*----------------------------------------------------------------------------------------------------------------*/
+	//add count for errors
+	function errorsText()
+	{
+		$(".imageMissingAlt").html("Images missing alt attribute: " + $('img:not([alt])').size() + "<span style='float: right;'></span>");
+		$(".imageEmptyAlt").html("Images empty alt text: " + $('img[alt=""]').size() + "<span style='float: right;'></span>");
+	}
+	
 	//highlight images with missing alt attribute
 	function imageMissingAlt()
 	{
 		$('img:not([alt])').each(function(index) {
 			toggleError($(this));
-			
-			imageMissingAltCount++;
 		});
+		
+		toggleErrorText($(".imageMissingAlt span"));
 	}
 	
 	//highlight images with empty alt attribute
 	function imageEmptyAlt()
-	{
+	{		
 		$('img[alt=""]').each(function(index) {
 			toggleWarning($(this));
-			
-			imageEmptyAltCount++;
 		});
+		
+		toggleErrorText($(".imageEmptyAlt span"));
 	}
 };
 
