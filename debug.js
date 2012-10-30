@@ -40,22 +40,6 @@ Debug = function(element)
 	    "text": "Click to hide / show errors and warnings"
 	}).appendTo(".debugger");
 	
-	$('<div/>', {
-		"style": "cursor: pointer;",
-		"class": "imageMissingAlt",
-		click: function() {
-			imageMissingAlt();
-		}
-	}).appendTo(".debugger");
-	
-	$('<div/>', {
-		"style": "cursor: pointer;",
-		"class": "imageEmptyAlt",
-		click: function() {
-			imageEmptyAlt();
-		}
-	}).appendTo(".debugger");
-	
 	
 	
 	
@@ -81,11 +65,17 @@ Debug = function(element)
 	
 	
 	/*----------------------------------------------------------------------------------------------------------------*\
-		RUN ALL CHECKS
+		TOGGLE ERROR TEXT 
 	\*----------------------------------------------------------------------------------------------------------------*/
-	errorsText();
-	imageMissingAlt();
-	imageEmptyAlt();
+	function toggleErrorText(element)
+	{	
+		if($(element).text() == "shown")
+		{
+			$(element).text("hidden");
+		} else {
+			$(element).text("shown");
+		}
+	}
 	
 	
 	
@@ -121,33 +111,50 @@ Debug = function(element)
 	
 	
 	
+	
 	/*----------------------------------------------------------------------------------------------------------------*\
-		TOGGLE ERROR TEXT 
+		RUN ALL CHECKS
 	\*----------------------------------------------------------------------------------------------------------------*/
-	function toggleErrorText(element)
-	{	
-		if($(element).text() == "shown")
-		{
-			$(element).text("hidden");
-		} else {
-			$(element).text("shown");
-		}
-	}
+	errorsText();
+	imageMissingAlt();
+	imageEmptyAlt();
 	
 	
 	
 	
 	
 	/*----------------------------------------------------------------------------------------------------------------*\
-		ERROR CHECKS
+		ADD ERROR TEXT
 	\*----------------------------------------------------------------------------------------------------------------*/
-	//add count for errors
 	function errorsText()
 	{
+		$('<div/>', {
+			"style": "cursor: pointer;",
+			"class": "imageMissingAlt",
+			click: function() {
+				imageMissingAlt();
+			}
+		}).appendTo(".debugger");
+		
+		$('<div/>', {
+			"style": "cursor: pointer;",
+			"class": "imageEmptyAlt",
+			click: function() {
+				imageEmptyAlt();
+			}
+		}).appendTo(".debugger");
+		
 		$(".imageMissingAlt").html("Images missing alt attribute: " + $('img:not([alt])').size() + "<span style='float: right;'></span>");
 		$(".imageEmptyAlt").html("Images empty alt text: " + $('img[alt=""]').size() + "<span style='float: right;'></span>");
 	}
-	
+
+
+
+
+
+	/*----------------------------------------------------------------------------------------------------------------*\
+		ERROR CHECKS
+	\*----------------------------------------------------------------------------------------------------------------*/
 	//highlight images with missing alt attribute
 	function imageMissingAlt()
 	{
@@ -168,10 +175,6 @@ Debug = function(element)
 		toggleErrorText($(".imageEmptyAlt span"));
 	}
 };
-
-
-
-
 
 $(function() {
     var debug = new Debug();
