@@ -5,21 +5,34 @@ Debug = function(element)
 	\*----------------------------------------------------------------------------------------------------------------*/
 	$('<div/>', {
 	    "class": "debugger",
-	    "style": "padding: 20px; " +
-	    		"border: 1px solid #ccc; " +
-	    		"box-shadow: 1px 1px 5px #000; " +
-	    		"background: #fff; " +
-	    		"color: #333; " +
-	    		"position: fixed; " +
-	    		"top: 0; " +
-	    		"left: 0; " +
+	    "style": "padding: 20px;" +
+	    		"border: 1px solid #ccc;" +
+	    		"box-shadow: 1px 1px 5px #000;" +
+	    		"background: #fff;" +
+	    		"color: #333;" +
+	    		"position: fixed;" +
+	    		"top: 0;" +
+	    		"left: 0;" +
 	    		"z-index: 9999;"
 	}).prependTo("body");
 	
+	$('<span/>', {
+		"style": "padding: 5px 8px;" +
+				"background: #ccc;" +
+				"line-height: 1em;" +
+				"position: absolute;" +
+				"top: 0; " +
+				"right: 0;",
+	    "text": "-",
+	    click: function() {
+			toggleDebugBar();
+		}
+	}).appendTo(".debugger");
+	
 	$('<h1/>', {
-		"style": "margin-bottom: 10px;",
+		"style": "margin-bottom: 0;",
 	    "text": "Debug bar"
-	}).prependTo(".debugger");
+	}).appendTo(".debugger");
 	
 	$('<div/>', {
 		"style": "margin-bottom: 10px;",
@@ -41,6 +54,27 @@ Debug = function(element)
 			imageEmptyAlt();
 		}
 	}).appendTo(".debugger");
+	
+	
+	
+	
+	
+	/*----------------------------------------------------------------------------------------------------------------*\
+		TOGGLE DEBUG BAR
+	\*----------------------------------------------------------------------------------------------------------------*/
+	function toggleDebugBar()
+	{
+		$(".debugger div").slideToggle();
+		$(".debugger h1").slideToggle();
+		
+		if($(".debugger span").text() == "-")
+		{
+			$(".debugger span").text("+");
+		} else {
+			$(".debugger span").text("-");
+		}
+		
+	}
 	
 	
 	
