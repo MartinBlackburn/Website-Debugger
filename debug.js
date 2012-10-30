@@ -124,6 +124,8 @@ Debug = function(element)
 	questionableHref1();
 	questionableHref2();
 	emptyHref();
+	invalidList1();
+	invalidList2();
 	
 	
 	
@@ -199,9 +201,31 @@ Debug = function(element)
 		}).appendTo(".debugger");
 		
 		$(".emptyHref").html("Links with empty href: " + $('a[href=""]').size() + "<span style='float: right;'></span>");
+		
+		/* List should only have li's as children */
+		$('<div/>', {
+			"style": "cursor: pointer;",
+			"class": "invalidList1",
+			click: function() {
+				invalidList1();
+			}
+		}).appendTo(".debugger");
+		
+		$(".invalidList1").html("UL with invalid children: " + $('ul').children(":not(li)").size() + "<span style='float: right;'></span>");
+		
+		/* List should only have li's as children */
+		$('<div/>', {
+			"style": "cursor: pointer;",
+			"class": "invalidList2",
+			click: function() {
+				invalidList2();
+			}
+		}).appendTo(".debugger");
+		
+		$(".invalidList2").html("OL with invalid children: " + $('ol').children(":not(li)").size() + "<span style='float: right;'></span>");
 	}
 
-
+	
 
 
 
@@ -266,6 +290,26 @@ Debug = function(element)
 		});
 		
 		toggleErrorText($(".emptyHref span"));
+	}
+	
+	/* List should only have li's as children */
+	function invalidList1()
+	{		
+		$('ul').children(":not(li)").each(function(index) {
+			toggleError($(this));
+		});
+		
+		toggleErrorText($(".invalidList1 span"));
+	}
+	
+	/* List should only have li's as children */
+	function invalidList2()
+	{		
+		$('ol').children(":not(li)").each(function(index) {
+			toggleError($(this));
+		});
+		
+		toggleErrorText($(".invalidList2 span"));
 	}
 };
 
