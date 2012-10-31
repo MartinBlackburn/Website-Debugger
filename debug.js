@@ -69,6 +69,9 @@ Debug = function(element)
 	checkError("invalidUL", "UL with invalid children", $('ul').children(":not(li)"), "error");
 	checkError("invalidOL", "OL with invalid children", $('ol').children(":not(li)"), "error");
 	
+	/* Trigger a click on all errors to show them */
+	$('.debugger div').trigger('click');
+	
 	
 	
 	
