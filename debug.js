@@ -47,19 +47,57 @@ Debug = function(element)
 	
 	
 	/*----------------------------------------------------------------------------------------------------------------*\
-		TOGGLE DEBUG BAR
+		LIST OF ERRORS TO CHECK
 	\*----------------------------------------------------------------------------------------------------------------*/
-	function toggleDebugBar()
+	/* No alt attribute */
+	checkError("noAlt", "Image missing alt attribute", $('img:not([alt])'), "error");
+	
+	/* Empty alt text is OK but should be doubled checked */
+	checkError("missingAlt", "Image has empty alt text", $('img[alt=""]'));
+
+	/* No href attribute */
+	checkError("noHref", "Link missing href attribute", $('a:not([href])'), "error");
+	
+	/* Questionable href */
+	checkError("questionalHref1", "Link with # for href", $('a[href="#"]'));
+	checkError("questionalHref2", "Link with 'javascript in href", $('a[href*="javascript"]'));
+	
+	/* Empty href */
+	checkError("emptyHref", "Link has empty href", $('a[href=""]'));
+	
+	/* List should only have li's as children */
+	checkError("invalidUL", "UL with invalid children", $('ul').children(":not(li)"), "error");
+	checkError("invalidOL", "OL with invalid children", $('ol').children(":not(li)"), "error");
+	
+	
+	
+	
+	
+	/*----------------------------------------------------------------------------------------------------------------*\
+		CHECK FOR ERROR
+	\*----------------------------------------------------------------------------------------------------------------*/
+	function checkError(className, description, rule, errorLevel)
 	{
-		$(".debugger div").slideToggle();
-		$(".debugger h1").slideToggle();
+		//create item in debug bar
+		$('<div/>', {
+			"style": "cursor: pointer;",
+			"class": className,
+			click: function() {
+				rule.each(function(index) {
+					if(errorLevel == "error")
+					{
+						toggleError($(this));
+					} else {
+						toggleWarning($(this));
+					}
+				});
+				
+				toggleErrorText($("." + className + " span"));
+			}
+		}).appendTo(".debugger");
 		
-		if($(".debugger a").text() == "-")
-		{
-			$(".debugger a").text("+");
-		} else {
-			$(".debugger a").text("-");
-		}
+		//add item display state
+		$("." + className).html(description + ": " + rule.size() + "<span style='float: right;'></span>");
 	}
 	
 	
@@ -67,24 +105,7 @@ Debug = function(element)
 	
 	
 	/*----------------------------------------------------------------------------------------------------------------*\
-		TOGGLE ERROR TEXT 
-	\*----------------------------------------------------------------------------------------------------------------*/
-	function toggleErrorText(element)
-	{	
-		if($(element).text() == "shown")
-		{
-			$(element).text("hidden");
-		} else {
-			$(element).text("shown");
-		}
-	}
-	
-	
-	
-	
-	
-	/*----------------------------------------------------------------------------------------------------------------*\
-		TOGGLE ERRORS
+		TOGGLE ERROR & WARNING STYLES
 	\*----------------------------------------------------------------------------------------------------------------*/
 	function toggleError(element)
 	{
@@ -115,201 +136,36 @@ Debug = function(element)
 	
 	
 	/*----------------------------------------------------------------------------------------------------------------*\
-		RUN ALL CHECKS
+		TOGGLE ERROR TEXT 
 	\*----------------------------------------------------------------------------------------------------------------*/
-	errorsText();
-	imageMissingAlt();
-	imageEmptyAlt();
-	noHref();
-	questionableHref1();
-	questionableHref2();
-	emptyHref();
-	invalidList1();
-	invalidList2();
+	function toggleErrorText(element)
+	{	
+		if($(element).text() == "shown")
+		{
+			$(element).text("hidden");
+		} else {
+			$(element).text("shown");
+		}
+	}
 	
 	
 	
 	
 	
 	/*----------------------------------------------------------------------------------------------------------------*\
-		ADD ERROR TEXT
+		TOGGLE DEBUG BAR
 	\*----------------------------------------------------------------------------------------------------------------*/
-	function errorsText()
+	function toggleDebugBar()
 	{
-		//images with missing alt attribute
-		$('<div/>', {
-			"style": "cursor: pointer;",
-			"class": "imageMissingAlt",
-			click: function() {
-				imageMissingAlt();
-			}
-		}).appendTo(".debugger");
+		$(".debugger div").slideToggle();
+		$(".debugger h1").slideToggle();
 		
-		$(".imageMissingAlt").html("Images missing alt attribute: " + $('img:not([alt])').size() + "<span style='float: right;'></span>");
-		
-		//images with empty alt attribute
-		$('<div/>', {
-			"style": "cursor: pointer;",
-			"class": "imageEmptyAlt",
-			click: function() {
-				imageEmptyAlt();
-			}
-		}).appendTo(".debugger");
-		
-		$(".imageEmptyAlt").html("Images empty alt text: " + $('img[alt=""]').size() + "<span style='float: right;'></span>");
-		
-		/* No href attribute */
-		$('<div/>', {
-			"style": "cursor: pointer;",
-			"class": "noHref",
-			click: function() {
-				noHref();
-			}
-		}).appendTo(".debugger");
-		
-		$(".noHref").html("Links without href attribute: " + $('a:not([href])').size() + "<span style='float: right;'></span>");
-		
-		/* Questionable href */
-		$('<div/>', {
-			"style": "cursor: pointer;",
-			"class": "questionableHref1",
-			click: function() {
-				questionableHref1();
-			}
-		}).appendTo(".debugger");
-		
-		$(".questionableHref1").html("Links with # as href: " + $('a[href="#"]').size() + "<span style='float: right;'></span>");
-		
-		/* Questionable href */
-		$('<div/>', {
-			"style": "cursor: pointer;",
-			"class": "questionableHref2",
-			click: function() {
-				questionableHref2();
-			}
-		}).appendTo(".debugger");
-		
-		$(".questionableHref2").html("Links with 'javacript' in href: " + $('a[href*="javascript"]').size() + "<span style='float: right;'></span>");
-		
-		/* Empty href */
-		$('<div/>', {
-			"style": "cursor: pointer;",
-			"class": "emptyHref",
-			click: function() {
-				emptyHref();
-			}
-		}).appendTo(".debugger");
-		
-		$(".emptyHref").html("Links with empty href: " + $('a[href=""]').size() + "<span style='float: right;'></span>");
-		
-		/* List should only have li's as children */
-		$('<div/>', {
-			"style": "cursor: pointer;",
-			"class": "invalidList1",
-			click: function() {
-				invalidList1();
-			}
-		}).appendTo(".debugger");
-		
-		$(".invalidList1").html("UL with invalid children: " + $('ul').children(":not(li)").size() + "<span style='float: right;'></span>");
-		
-		/* List should only have li's as children */
-		$('<div/>', {
-			"style": "cursor: pointer;",
-			"class": "invalidList2",
-			click: function() {
-				invalidList2();
-			}
-		}).appendTo(".debugger");
-		
-		$(".invalidList2").html("OL with invalid children: " + $('ol').children(":not(li)").size() + "<span style='float: right;'></span>");
-	}
-
-	
-
-
-
-	/*----------------------------------------------------------------------------------------------------------------*\
-		ERROR CHECKS
-	\*----------------------------------------------------------------------------------------------------------------*/
-	//images with missing alt attribute
-	function imageMissingAlt()
-	{
-		$('img:not([alt])').each(function(index) {
-			toggleError($(this));
-		});
-		
-		toggleErrorText($(".imageMissingAlt span"));
-	}
-	
-	//images with empty alt attribute
-	function imageEmptyAlt()
-	{		
-		$('img[alt=""]').each(function(index) {
-			toggleWarning($(this));
-		});
-		
-		toggleErrorText($(".imageEmptyAlt span"));
-	}
-	
-	/* No href attribute */
-	function noHref()
-	{		
-		$('a:not([href])').each(function(index) {
-			toggleError($(this));
-		});
-		
-		toggleErrorText($(".noHref span"));
-	}
-	
-	/* Questionable href */
-	function questionableHref1()
-	{		
-		$('a[href="#"]').each(function(index) {
-			toggleWarning($(this));
-		});
-		
-		toggleErrorText($(".questionableHref1 span"));
-	}
-	
-	/* Questionable href */
-	function questionableHref2()
-	{		
-		$('a[href*="javascript"]').each(function(index) {
-			toggleWarning($(this));
-		});
-		
-		toggleErrorText($(".questionableHref2 span"));
-	}
-	
-	/* Empty href */
-	function emptyHref()
-	{		
-		$('a[href=""]').each(function(index) {
-			toggleWarning($(this));
-		});
-		
-		toggleErrorText($(".emptyHref span"));
-	}
-	
-	/* List should only have li's as children */
-	function invalidList1()
-	{		
-		$('ul').children(":not(li)").each(function(index) {
-			toggleError($(this));
-		});
-		
-		toggleErrorText($(".invalidList1 span"));
-	}
-	
-	/* List should only have li's as children */
-	function invalidList2()
-	{		
-		$('ol').children(":not(li)").each(function(index) {
-			toggleError($(this));
-		});
-		
-		toggleErrorText($(".invalidList2 span"));
+		if($(".debugger a").text() == "-")
+		{
+			$(".debugger a").text("+");
+		} else {
+			$(".debugger a").text("-");
+		}
 	}
 };
 
