@@ -55,7 +55,7 @@ Debug = function(element)
 	/* No alt attribute */
 	checkError("noAlt", "Image missing alt attribute", $('img:not([alt])'), "error");
 	
-	/* Empty alt text is OK but should be doubled checked */
+	/* Empty alt text */
 	checkError("missingAlt", "Image has empty alt text", $('img[alt=""]'));
 
 	/* No href attribute */
@@ -109,7 +109,7 @@ Debug = function(element)
 	/* Avoid in-line styles */
 	checkError("inlineStyles", "Do you need inline styles?", $('[style]'));
 
-	/* Avoid IDs for styling, double check to make sure this isn't doing any styling */
+	/* Avoid IDs for styling */
 	checkError("hasID", "Do you need an ID?", $('[id]'));
 
 	/* Empty class */

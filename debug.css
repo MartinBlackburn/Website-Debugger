@@ -44,7 +44,7 @@ img:not([alt]) {
     outline: 5px solid red;
 }
 
-/* Empty alt text is OK but should be doubled checked */
+/* Empty alt text */
 img[alt=""] {
     outline: 5px solid yellow;
 }
@@ -165,7 +165,7 @@ input[type="submit"][value=""] {
     outline: 5px solid yellow;
 }
 
-/* Avoid IDs for styling, double check to make sure this isn't doing any styling */
+/* Avoid IDs for styling */
 [id] {
     outline: 5px solid yellow;
 }
