@@ -120,7 +120,9 @@ form[method=""] {
     FORM ELEMENTS
 \*----------------------------------------------------------------------------------------------------------------*/
 /* No name attribute */
-input:not([name]) {
+input:not([name]),
+textarea:not([name]),
+select:not([name]) {
     outline: 5px solid red;
 }
 

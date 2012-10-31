@@ -81,6 +81,28 @@ Debug = function(element)
 	/* Has an empty method */
 	checkError("emptyMethod", "Form with empty method", $('form[method=""]'));
 	
+	/* No name attribute */
+	checkError("noName1", "Input without name attribute", $('input:not([name])'), "error");
+	checkError("noName2", "Textarea without name attribute", $('textarea:not([name])'), "error");
+	checkError("noName3", "Select without name attribute", $('select:not([name])'), "error");
+
+	/* No type attribute */
+	checkError("noType", "Input without type attribute", $('input:not([type])'), "error");
+
+	/* Has an empty name */
+	checkError("emptyName1", "Input with empty name", $('input[name=""]'), "error");
+	checkError("emptyName2", "Textarea with empty name", $('textarea[name=""]'), "error");
+	checkError("emptyName3", "Select with empty name", $('select[name=""]'), "error");
+	
+	/* Has an empty type */
+	checkError("emptyType", "Input with empty type", $('input[type=""]'), "error");
+
+	/* Submit has no value */
+	checkError("submitMissingValue", "Submit input missing a value", $('input[type="submit"]:not([value])'), "error");	
+
+	/* Submit input has an empty value */
+	checkError("submitEmptyValue", "Submit input with empty value", $('input[type="submit"][value=""]'), "error");
+	
 	/* Trigger a click on all errors to show them */
 	$('.debugger div').trigger('click');
 	
