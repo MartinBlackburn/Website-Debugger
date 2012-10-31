@@ -5,11 +5,14 @@ Debug = function(element)
 	\*----------------------------------------------------------------------------------------------------------------*/
 	$('<div/>', {
 	    "class": "debugger",
-	    "style": "padding: 20px;" +
+	    "style": "width: 300px;" +
+	    		"padding: 20px;" +
 	    		"border: 1px solid #ccc;" +
 	    		"box-shadow: 1px 1px 5px #000;" +
 	    		"background: #fff;" +
 	    		"color: #333;" +
+	    		"font-size: 14px;" +
+	    		"line-height: 1.5em;" +
 	    		"position: fixed;" +
 	    		"top: 0;" +
 	    		"left: 0;" +
@@ -60,7 +63,7 @@ Debug = function(element)
 	
 	/* Questionable href */
 	checkError("questionalHref1", "Link with # for href", $('a[href="#"]'));
-	checkError("questionalHref2", "Link with 'javascript in href", $('a[href*="javascript"]'));
+	checkError("questionalHref2", "Link with 'javascript' in href", $('a[href*="javascript"]'));
 	
 	/* Empty href */
 	checkError("emptyHref", "Link has empty href", $('a[href=""]'));
@@ -103,6 +106,18 @@ Debug = function(element)
 	/* Submit input has an empty value */
 	checkError("submitEmptyValue", "Submit input with empty value", $('input[type="submit"][value=""]'), "error");
 	
+	/* Avoid in-line styles */
+	checkError("inlineStyles", "Do you need inline styles?", $('[style]'));
+
+	/* Avoid IDs for styling, double check to make sure this isn't doing any styling */
+	checkError("hasID", "Do you need an ID?", $('[id]'));
+
+	/* Empty class */
+	checkError("emptyClass", "Element has an empty class", $('[class=""]'), "error");
+
+	/* Empty id */
+	checkError("emptyID", "Element has an empty ID", $('[id=""]'), "error");
+	
 	/* Trigger a click on all errors to show them */
 	$('.debugger div').trigger('click');
 	
@@ -115,6 +130,10 @@ Debug = function(element)
 	\*----------------------------------------------------------------------------------------------------------------*/
 	function checkError(className, description, rule, errorLevel)
 	{
+		//remove debugger elements from the rule
+		rule = rule.not(".debugger");
+		rule = rule.not(".debugger *");
+		
 		//create item in debug bar
 		$('<div/>', {
 			"style": "cursor: pointer;",
