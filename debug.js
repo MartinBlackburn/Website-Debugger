@@ -69,6 +69,18 @@ Debug = function(element)
 	checkError("invalidUL", "UL with invalid children", $('ul').children(":not(li)"), "error");
 	checkError("invalidOL", "OL with invalid children", $('ol').children(":not(li)"), "error");
 	
+	/* No method attribute */
+	checkError("noAction", "Form without method attribute", $('form:not([method])'), "error");
+
+	/* No action attribute */
+	checkError("noAction", "Form without action attribute", $('form:not([action])'), "error");
+
+	/* Has an empty action */
+	checkError("emptyAction", "Form with empty action", $('form[action=""]'));
+
+	/* Has an empty method */
+	checkError("emptyMethod", "Form with empty method", $('form[method=""]'));
+	
 	/* Trigger a click on all errors to show them */
 	$('.debugger div').trigger('click');
 	
