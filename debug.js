@@ -118,6 +118,9 @@ Debug = function(element)
 	/* Empty id */
 	checkError("emptyID", "Element has an empty ID", $('[id=""]'), "error");
 	
+	/* Empty elements */
+	checkError("emptyElement", "Empty element", $(':empty').not(".clear:empty, textarea:empty, input:empty, img:empty, br:empty, hr:empty"));
+	
 	/* Trigger a click on all errors to show them */
 	$('.debugger div').trigger('click');
 	
